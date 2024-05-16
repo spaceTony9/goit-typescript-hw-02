@@ -1,6 +1,14 @@
 import axios from 'axios';
+import { Photo } from './components/App/App.types';
 
-export default async function fetchPhotosWithKeyWord(keyword, page) {
+type ApiResponse = {
+  results: Photo[];
+};
+
+export default async function fetchPhotosWithKeyWord(
+  keyword: string,
+  page: number
+): Promise<Photo[]> {
   const instance = axios.create({
     baseURL: 'https://api.unsplash.com/',
     headers: { 'Accept-Version': 'v1' },
@@ -12,10 +20,10 @@ export default async function fetchPhotosWithKeyWord(keyword, page) {
     },
   });
   try {
-    const response = await instance.get('/search/photos');
+    const response = await instance.get<ApiResponse>('/search/photos');
     return response.data.results;
   } catch (error) {
-    console.error('ErrorMessage fetching photos:', error);
+    console.error('Error fetching photos:', error);
     throw error;
   }
 }
