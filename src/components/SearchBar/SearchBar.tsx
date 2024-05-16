@@ -1,12 +1,17 @@
-import { Field, Form, Formik } from 'formik';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
 import toast, { Toaster } from 'react-hot-toast';
 import css from './SearchBar.module.css';
 import searchIcon from '/src/img/searchIcon.svg';
+import { Props, FormValues } from './SearchBar.types';
+import React from 'react';
 
-function SearchBar({ onSubmit }) {
+function SearchBar({ onSubmit }: Props): React.ReactElement {
   const notify = () => toast('Please type a desired word.');
 
-  function handleSubmit(values, actions) {
+  function handleSubmit(
+    values: FormValues,
+    actions: FormikHelpers<FormValues>
+  ) {
     if (values.searchedText.trim() !== '') {
       onSubmit(values.searchedText);
       actions.resetForm();
@@ -34,7 +39,7 @@ function SearchBar({ onSubmit }) {
           </div>
         </Form>
       </Formik>
-      <Toaster position="top.right" />
+      <Toaster position="top-right" />
     </header>
   );
 }

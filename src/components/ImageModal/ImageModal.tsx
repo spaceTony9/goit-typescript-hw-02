@@ -1,7 +1,13 @@
 import Modal from 'react-modal';
 import css from './ImageModal.module.css';
+import { Props } from './ImageModal.types';
+import React from 'react';
 
-function ImageModal({ isOpen, closeModal, modalContent }) {
+function ImageModal({
+  isOpen,
+  closeModal,
+  modalContent,
+}: Props): React.ReactElement {
   return (
     <div>
       <Modal

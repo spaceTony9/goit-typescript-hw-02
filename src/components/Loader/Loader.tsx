@@ -1,7 +1,8 @@
 import css from './Loader.module.css';
 import { Blocks } from 'react-loader-spinner';
+import React from 'react';
 
-function Loader() {
+function Loader(): React.ReactElement {
   return (
     <div className={css.loaderWrapper}>
       <Blocks

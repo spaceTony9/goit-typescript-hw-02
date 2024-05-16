@@ -5,20 +5,23 @@ import {
   ImageModal,
   LoadMoreBtn,
   Loader,
-} from './components/index.js';
+} from '../index.js';
 import { useEffect, useState } from 'react';
-import fetchPhotosWithKeyWord from './apiService.js';
-import './App.css';
+import fetchPhotosWithKeyWord from '../../apiService.js';
+import '../../App.css';
+import { Photo } from './App.types';
 
 export default function App() {
-  const [query, setQuery] = useState('');
-  const [photos, setPhotos] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [page, setPage] = useState(1);
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [modalFilter, setModalFilter] = useState();
-  const [contentForModal] = photos.filter(photo => photo.id === modalFilter);
+  const [query, setQuery] = useState<string>('');
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const [modalFilter, setModalFilter] = useState<string | null>(null);
+  const [contentForModal] = photos.filter(
+    (photo: Photo) => photo.id === modalFilter
+  );
 
   useEffect(() => {
     async function fetchPhotos() {
@@ -40,7 +43,7 @@ export default function App() {
     fetchPhotos();
   }, [query, page]);
 
-  function onFormSubmit(searchedWord) {
+  function onFormSubmit(searchedWord: string) {
     if (query.toLowerCase() !== searchedWord.toLowerCase()) {
       setPhotos([]);
       setQuery(searchedWord);
@@ -48,7 +51,8 @@ export default function App() {
     setPage(1);
   }
 
-  function handleLoadMoreBtnClick() {
+  function handleLoadMoreBtnClick(e: React.MouseEvent<HTMLButtonElement>) {
+    e.stopPropagation();
     setPage(prevState => prevState + 1);
   }
 
@@ -60,7 +64,7 @@ export default function App() {
     setIsOpen(false);
   }
 
-  function createModalContent(id) {
+  function createModalContent(id: string) {
     setModalFilter(id);
   }
 

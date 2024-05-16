@@ -1,7 +1,14 @@
 import css from './ImageCard.module.css';
+import { Props } from './ImageCard.types';
 
-function ImageCard({ desc, link, openModal, photoId, modalContent }) {
-  function handleClick(id) {
+function ImageCard({
+  desc,
+  link,
+  openModal,
+  photoId,
+  modalContent,
+}: Props): JSX.Element {
+  function handleClick(id: string) {
     modalContent(id);
     openModal();
   }
@@ -9,7 +16,7 @@ function ImageCard({ desc, link, openModal, photoId, modalContent }) {
   return (
     <div>
       <img
-        onClick={() => handleClick(photoId)}
+        onClick={(): void => handleClick(photoId)}
         className={css.listImage}
         src={link}
         alt={desc}
